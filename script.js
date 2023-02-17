@@ -1,31 +1,53 @@
-const days = document.getElementById("days");
-const hourse = document.getElementById("hourse");
-const minutes = document.getElementById("minutes");
-const seconds = document.getElementById("seconds");
-const year = document.getElementById("year");
-const countdown = document.getElementById("countown");
-let currentyear = new Date().getFullYear();
-let nextyear = currentyear + 1;
-year.innerHTML = nextyear;
-let newyearTime = new Date(`january 01 ${nextyear} 00`)
-console.log(newyearTime.getFullYear());
+const name = document.querySelector("#name");
+const email = document.querySelector("#email");
+const age = document.querySelector("#age");
+const contact = document.querySelector("#contact");
 
-function updateCountDown() {
-    let currentTime= new Date();
-    let diff = newyearTime - currentTime;
-    // console.log(diff);
 
-    let d = Math.floor(diff / 1000 / 60 / 60 / 24);
-    let h = Math.floor(diff / 1000 / 60 / 60) % 24;
-    let m = Math.floor(diff / 1000 / 60) % 60;
-    let s = Math.floor(diff / 1000) % 60;
 
-    days.innerHTML = d < 10 ? "0" + d : d;
-    hourse.innerHTML = h < 10 ? "0" + h : h;
-    minutes.innerHTML = m < 10 ? "0" + m : m;
-    seconds.innerHTML = s < 10 ? "0" + s : s;
+const submitBtn = document.querySelector("button");
+const tbody = document.querySelector("tbody") 
+
+const users = [];
+
+submitBtn.addEventListener("click",()=>{
+    if (!name.value||!email.value||!age.value||!contact.value) {
+        alert("please enter all the details");
+        return; 
+    }
+     const userData = {
+        name:name.value,
+        email:email.value,
+        age:age.value,
+        contact:contact.value,
+     };
+     name.value = "";
+     email.value = "";
+     age.value = "";
+     contact.value = "";
+    users.push(userData);
+    displayData()
+});
+
+function displayData(){
+    tbody.innerHTML = "";
+    users.forEach((user)=>{
+        const tr =document.createElement("tr");
+        const nameData =document.createElement("td"); 
+        const emailData =document.createElement("td"); 
+        const ageData =document.createElement("td");
+        const contactData = document.createElement("td"); 
+
+        nameData.innerText = user.name;
+        emailData.innerText = user.email;
+        ageData.innerText = user.age;
+        contactData.innerText = user.contact;
+        
+        tr.append(nameData);
+        tr.append(emailData);
+        tr.append(ageData);
+        tr.append(contactData);
+        tbody.append(tr);
+    });
+      
 }
-
-
-
-setInterval(updateCountDown, 1000);
